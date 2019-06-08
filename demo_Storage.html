@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Ejemplo Web Storage</title>
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    </head>
+    <body>
+        <script>
+            if (typeof(Storage) !== 'undefined'){
+                 //localStorage.setItem("miDato", 10);
+                 var datoDesdeStorage = localStorage.getItem("miDato");
+                 alert("miDato = " + datoDesdeStorage);
+                //sessionStorage.setItem("miDatoEnSesion", 12);
+                //var datoDesdeStorage = sessionStorage.getItem("miDatoEnSesion");
+                //alert("miDatoEnSesion = " + datoDesdeStorage);
+            } else {
+                alert("No, soporta web storage");
+            }
+        </script>
+
+    </body>
+
+</html>

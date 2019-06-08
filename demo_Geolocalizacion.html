@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Ejemplo geolocalizacion</title>
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    </head>
+    <body>
+        <script>
+            if(navigator.geolocation){
+                navigator.geolocation.getCurrentPosition(
+                    function (datos) {
+                        //esto devuelve coordenadas en la propiedad coords
+                        alert("Latitud: " + datos.coords.latitude + " Longitud: " + datos.coords.longitude);
+                    },
+                    function () {
+                        alert("Algo fue mal");
+                    }
+                );
+            } else {
+                alert("Nó, está soportado geolocalizacion en este navegador");
+            }
+        </script>
+    </body>
+
+</html>
