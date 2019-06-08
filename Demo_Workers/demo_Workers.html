@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Ejemplo Workers</title>
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    </head>
+    <body>
+
+        <button onclick="pararWorker()">Parar Worker</button>
+        <span id="mensaje"></span>
+
+    <script>
+        var worker;
+        var spanMensaje = document.getElementById("mensaje");
+        if (typeof(Worker) !== 'undefined') {
+            worker = new Worker("Demo_Workers/tareaSegundoPlano.js");
+
+            worker.onmessage = function ( datos ) {            
+                spanMensaje.innerHTML = datos.data;
+            }
+        } else {
+            alert("no, tenemos web workers");
+        }
+        function pararWorker() {
+            worker.terminate();
+            worker = "undefined";
+        }
+    </script>
+
+    </body>
+
+</html>

@@ -306,4 +306,84 @@ Este expira con la sesión actual, al cerrar la pestaña o ventana del navegador
         }
     </script>
 ```
+
 Lo usamos para gauardar datos de sesion, el ejm antertior, sirve para guardar el numero de paginas que hemos navegados y guardarlo en un contador.
+
+# Web Workers
+
+Java script no trabaja en multihilos, eo en tareas de segundo plano.
+No debemos mandar a ejecutar tareas multihilos, javascript no podra pasarla a otro hilo, y esto se va a ver cortado. El hilo principal esta haciendo una tarea, porque no tiene otra forma de hacerlo.
+
+Por tanto el multihilo llega gracias a los `Web workers` de html5.
+Estos ejecutan código Javascript en segundo plano.
+No afectan al rendimiento de la pagina.
+no están pensados para tareas simples, sino para tareas que hagan uso intensivo de CPU. Funcionalidad pesada como calculo, o funcionalidad pesadas de CPU.
+
+* API `Web Workers`
+
+Ejemplo sencillo de Web Workers.
+
+```html
+    <script>
+        //El navegador soporta Web Workers
+        if (typeof(Worker) !== 'undefined') {
+            // Ejecuta el script my_background_task.js en segundo plano
+            var worker = new Worker("my_background_task.js");
+        }
+        //El navegador no soporta web workers
+        else {
+            /*Codigo*/
+        }
+    </script>
+```
+La tarea que sea pesada e intereante correrla en segundo plano es la que vamos a tener en un archivo de javascript separado y dentro de un worker, y lo vamos a pasar como parametro.
+
+En el momento que se escribe new Worker, este worker empieza, ahora mismo no hay como retrasar la ejecucion de esta tarea, solo se puede parar la ejecución.
+
+* Acciones posibles con los Web Workers
+
+Tabien podemos parar la ejecución de una tarea en background. Esto porque no esta haciendo lo que debe, esta tomando bastante tiempo.
+
+Tambien podemos estar pendientes con este `onmesage`, permite enviar mensajes al hilo principal onmessage.
+
+```html
+    <script>
+        //Teniendo el siguiente Web Worker
+        var worker = new worker("my_background_task.js");
+        //Podemos terminar su ejecucion
+        worker.terminate();
+        worker = "undefined";
+
+        //Recibir notificaciones
+        worker.onmessage = function(event) {
+            //En event.data tenemos el dato notificado
+        }
+    </script>
+```
+
+* Envio de notificaciones al Web Worker
+
+```html
+    <script>
+        //Documento my_background_task.js
+        function fibonacci (num) {
+            var result;
+            //Cdigo para calcular el fibonacci de num
+            postMessage(result);
+        }
+
+        fibonacci(36);
+    </script>
+```
+
+Lanzar tarea en 2do plano, ver que no esta bloqueando el hilo principal y que realmente el postMessage esta haciendo algo.
+El postMessage es una forma que tiene el worker desde la tarea del 2do plano de notificar al que lanzo la tarea de 2do plano.
+
+En el momento que ejecuta el postMessage, está cayendo en `worker.onmessage`, es decir notifica al hilo principal y el onmessage lo pinta en pantalla.
+
+# Demo Workers
+
+> Nota: Para poder ver funcionar el worker se debe correr el demo en un servidor web http.
+
+Podemos ver el código en `Demo_Workers`.
+
