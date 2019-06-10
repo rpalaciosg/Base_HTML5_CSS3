@@ -386,4 +386,3 @@ En el momento que ejecuta el postMessage, está cayendo en `worker.onmessage`, e
 > Nota: Para poder ver funcionar el worker se debe correr el demo en un servidor web http.
 
 Podemos ver el código en `Demo_Workers`.
-
